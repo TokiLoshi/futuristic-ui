@@ -1,0 +1,58 @@
+[
+  {
+    "userId": 1,
+    "first_name": "lorem",
+    "last_name": "ipsum",
+    "height": 75,
+    "weight": 65,
+    "recovery": 67,
+    "sleep": 8.5,
+    "sleep_needed": 9,
+    "sleep_efficiency": 87,
+    "sleep_debt": 2.25,
+    "disturbances_per_hour": 1,
+    "heart_rate_variability": 42,
+    "resting_heart_rate": 57,
+    "blood_oxygen": 99,
+    "skin_temp_celcius": 37,
+    "respiratory_rate": 17.5,
+    "max_heart_rate": 200,
+    "average_heart_rate": 68,
+    "age": 28,
+    "active_time": 80,
+    "workouts": [
+      {
+        "id": 1,
+        "type": "strength",
+        "duration": 60,
+        "strain": 11.6,
+        "distance": 0,
+        "kj": 356,
+        "personal_record": false,
+        "muscle_groups": {
+          "arms": 20,
+          "core": 25,
+          "back": 20,
+          "legs": 35
+        },
+        "altitude_gained": 0
+      },
+      {
+        "id": 2,
+        "type": "running",
+        "duration": 20,
+        "strain": 5.3,
+        "kj": 300,
+        "distance": 3.4,
+        "persona_record": false,
+        "muscle_groups": {
+          "arms": 5,
+          "core": 10,
+          "back": 5,
+          "legs": 80
+        },
+        "altitude_gained": 200
+      }
+    ]
+  }
+]
