@@ -1,6 +1,15 @@
 'use client'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
+impor { Roboto } from 'next/font/google'
+import { Text3D, FontLoader } from '@react-three/drei'
+
+const roboto = Roboto({
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap'
+})
 
 const Text3D = dynamic(() => import('@react-three/drei').then((mod) => mod.Text3D), {
   ssr: false,
@@ -30,6 +39,7 @@ export default function Dashboard() {
     <>
       <div className='bg-slate-800'>
         <h1>Dashboard to go here</h1>
+        <Text3D font={font}>Please Render</Text3D>
         <div className='mx-auto flex w-full flex-col flex-wrap items-center md:flex-row  lg:w-4/5'>
           {/* jumbo */}
           <div className='flex w-full flex-col items-start justify-center p-12 text-center md:w-2/5 md:text-left'>
