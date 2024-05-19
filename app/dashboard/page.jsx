@@ -1,21 +1,28 @@
 'use client'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
-impor { Roboto } from 'next/font/google'
-import { Text3D, FontLoader } from '@react-three/drei'
+import {
+  MeshReflectorMaterial,
+  Plane,
+  Html,
+  GradientTexture,
+  Text,
+  MeshPortalMaterial,
+  useProgress,
+} from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import { useControls, Leva } from 'leva'
+import * as THREE from 'three'
 
-const roboto = Roboto({
-  weight: ['400', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap'
-})
+// function Loader() {
+//   const { progress, active } = useProgress()
+//   return <HTML center>{progress.toFixed(1)} % loaded</HTML>
+// }
 
+// const font = new FontLoader().parse(require('fonts/bold/blob'))
 const Text3D = dynamic(() => import('@react-three/drei').then((mod) => mod.Text3D), {
   ssr: false,
 })
-const Duck = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Duck), { ssr: false })
-const Dog = dynamic(() => import('@/components/canvas/Examples').then((mod) => mod.Dog), { ssr: false })
 const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.View), {
   ssr: false,
   loading: () => (
@@ -35,48 +42,47 @@ const View = dynamic(() => import('@/components/canvas/View').then((mod) => mod.
 const Common = dynamic(() => import('@/components/canvas/View').then((mod) => mod.Common), { ssr: false })
 
 export default function Dashboard() {
+  const { levaStuffToGoHere } = useControls({ levaStuffToGoHere: false })
   return (
     <>
+      <Leva collapsed />
+
       <div className='bg-slate-800'>
-        <h1>Dashboard to go here</h1>
-        <Text3D font={font}>Please Render</Text3D>
         <div className='mx-auto flex w-full flex-col flex-wrap items-center md:flex-row  lg:w-4/5'>
           {/* jumbo */}
           <div className='flex w-full flex-col items-start justify-center p-12 text-center md:w-2/5 md:text-left'>
-            <p className='w-full rounded border bg-slate-800 p-2 uppercase text-indigo-200 shadow'>Testing testing</p>
-            <h1 className='my-4 rounded bg-lime-200 p-2 text-5xl font-bold leading-tight shadow'>
-              Dashboard should go here
-            </h1>
+            <p className='w-full rounded border bg-slate-800 p-2 uppercase text-indigo-300 shadow'>
+              The Future is here
+            </p>
           </div>
         </div>
         <div className='w-full p-6 sm:w-1/2'>
-          <h2 className='mb-3 text-3xl font-bold leading-none text-gray-800'>Dom and 3D are synchronized</h2>
-          <p className='mb-8 text-gray-600'>
-            3D Divs are renderer through the View component. It uses gl.scissor to cut the viewport into segments. You
-            tie a view to a tracking div which then controls the position and bounds of the viewport. This allows you to
-            have multiple views with a single, performant canvas. These views will follow their tracking elements,
-            scroll along, resize, etc.
-          </p>
+          <h2 className='mb-3 text-3xl font-bold leading-none text-lime-200'>Dom and 3D are synchronized</h2>
         </div>
-        <div className='relative my-12 h-48 w-full py-6 sm:w-1/2 md:mb-40'>
-          <View orbit className='relative h-full animate-bounce sm:h-48 sm:w-full'>
+
+        <div className='relative my-12 h-96 w-full py-6 sm:w-1/2 md:mb-40'>
+          <View orbit className='relative h-full  sm:h-5/6 sm:w-full'>
             <Suspense fallback={null}>
-              <Duck route='/blob' scale={2} position={[0, -1.6, 0]} />
-              <Common color={'lightblue'} />
+              <mesh rotation-x={-Math.PI / 2}>
+                <planeGeometry args={[15, 35]} />
+
+                <meshBasicMaterial side={2} transparent>
+                  <GradientTexture
+                    stops={[0, 0.3, 0.5, 1]} // As many stops as you want
+                    colors={['black', 'blue', 'pink', 'lime']} // Colors need to match the number of stops
+                    size={1024} // Size is optional, default = 1024
+                  />
+                </meshBasicMaterial>
+              </mesh>
+              <Html position={[0, -1, 15]}>
+                <div className='bg-lime-50'></div>
+              </Html>
+              <Text color={'yellow'} scale={0.3} rotation={[0, 0, 0]} postion={[-3, 3, 2]}>
+                Here is Text
+                {'\n'}
+                More text please
+              </Text>
             </Suspense>
-          </View>
-        </div>
-        <div className='relative my-12 h-48 w-full py-6 sm:w-1/2 md:mb-40'>
-          <View orbit className='relative h-full  sm:h-48 sm:w-full'>
-            <Suspense fallback={null}>
-              <Dog scale={2} position={[0, -1.6, 0]} rotation={[0.0, -0.3, 0]} />
-              <Common color={'lightpink'} />
-            </Suspense>
-          </View>
-        </div>
-        <div>
-          <View orbit className='relative h-full  sm:h-48 sm:w-full'>
-            <Suspense fallback={null}></Suspense>
           </View>
         </div>
       </div>
